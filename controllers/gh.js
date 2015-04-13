@@ -7,12 +7,13 @@ exports.getReviewRepos = function(req, res, next) {
   console.log('found github token', token);
 
   var github = new Github({ token: token.accessToken });
-  var repo = github.getRepo('sahat', 'requirejs-library');
-  repo.show(function(err, repo) {
+  var user = github.getUser();
+  user.repos(function (err, repos) {
     if (err) return next(err);
+
     res.render('review/repos', {
       title: 'Repos',
-      repo: repo
+      repos: repos
     });
   });
 

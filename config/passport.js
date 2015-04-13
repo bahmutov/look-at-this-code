@@ -130,15 +130,13 @@ exports.isAuthenticated = function(req, res, next) {
   res.redirect('/login');
 };
 
-/**
- * Authorization Required middleware.
+/*
+  Authorization Required middleware.
  */
 exports.isAuthorized = function(req, res, next) {
-  var provider = req.path.split('/').slice(-1)[0];
-
-  if (R.find(R.propEq('kind', provider), req.user.tokens)) {
+  if (R.find(R.propEq('kind', 'github'), req.user.tokens)) {
     next();
   } else {
-    res.redirect('/auth/' + provider);
+    res.redirect('/auth/github');
   }
 };
