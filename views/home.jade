@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1 PE-N-starter
+  p.lead PouchDB + Express + * + Node + Github auth starter project
+  .row
+    .col-sm-6.col-sm-offset-3
+      pre
+        | git clone --depth 1 https://github.com/bahmutov/PE-N-starter.git
+        | cd PE-N-starter
+        | npm install
+        | npm run dev
+  hr
+  .row
+    .col-sm-3
+      h2 PouchDB
+      p NoSQL, all JS local database. No separate installation or process (unlike MongoDB). Can be used as a proxy to CouchDB.
+      p
+        a.btn.btn-default(href='http://pouchdb.com/', role='button') View details »
+    .col-sm-3
+      h2 Express
+      p Fast, unopinionated, minimalist web framework for Node.js
+      p
+        a.btn.btn-default(href='http://expressjs.com/', role='button') View details »
+    .col-sm-3
+      h2
+        i.fa.fa-asterisk
+      p There is no client-side MVC framework. Plug whatever you want! The server renders <a href="http://jade-lang.com/">Jade</a> templates.
+      p
+        a.btn.btn-default(href='http://todomvc.com/', role='button') View details »
+    .col-sm-3
+      h2 Node.js / io.js
+      p Node.js is Chrome's V8 JS language running on the server.
+      p io.js is a fork of Node.js that is currently under very active (compared to Node) development.
+      p
+        a.btn.btn-default(href='https://iojs.org/en/index.html', role='button') View details »
+    .col-sm-4
+      h2
+        i.fa.fa-github
+      p I work with source code hosted on Github a lot, so the only auth integration included is theirs.
+      p
+        a.btn.btn-default(href='https://github.com/', role='button') View details »
+    .col-sm-4
+      h2 I need more!
+      p Take a look at the <a href="https://github.com/sahat/hackathon-starter">Hackathon starter</a> project. It includes lots of integrated APIs plus MongoDB.
+      p
+        a.btn.btn-default(href='http://hackathonstarter.herokuapp.com/', role='button') View details »
+

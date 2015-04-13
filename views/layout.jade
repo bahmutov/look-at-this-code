@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    include partials/head
+  body
+    include partials/header
+
+    .container
+      include partials/flash
+      block content
+
+    include partials/footer
+
+    != js('application')

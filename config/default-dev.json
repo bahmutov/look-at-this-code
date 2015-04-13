@@ -1,0 +1,29 @@
+{
+  "NODE_ENV": "dev",
+  "PORT": 3000,
+  "db": "<pouch db name to use>",
+
+  "github": {
+    "clientID": "<client id from github application>",
+    "clientSecret": "<client secret>",
+    "callbackURL": "/auth/github/callback",
+    "passReqToCallback": true
+  },
+
+  "sessionSecret": "<Your Session Secret goes here>",
+
+  "mailgun": {
+    "user": "test@test.mailgun.org",
+    "password": "<mailgun password>"
+  },
+
+  "mandrill": {
+    "user": "<mandrill user>",
+    "password": "<mandrill password>"
+  },
+
+  "sendgrid": {
+    "user": "<sendgrid user>",
+    "password": "<sendgrid password>"
+  }
+}
