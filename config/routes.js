@@ -6,7 +6,7 @@ var passport = require('passport');
  */
 var homeController = require('../controllers/home');
 var userController = require('../controllers/user');
-var apiController = require('../controllers/api');
+var ghController = require('../controllers/gh');
 var contactController = require('../controllers/contact');
 
 
@@ -24,12 +24,10 @@ function addRoutes(app) {
   app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
   app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 
-  /**
-   * API examples routes.
-   */
-  app.get('/api', apiController.getApi);
-  app.get('/api/github', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getGithub);
+  // code review routes
+  app.get('/review/repos', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getReviewRepos);
 
+  // auth via github
   app.get('/auth/github', passport.authenticate('github'));
   app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
     console.log('logged in via github');
