@@ -57,6 +57,7 @@
     "supertest": "^0.15.0"
   },
   "pre-commit": [
+    "npm test",
     "npm version"
   ]
 }
