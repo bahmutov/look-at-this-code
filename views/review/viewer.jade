@@ -8,7 +8,10 @@ block content
         span.text-muted #{userName} / #{repoName} / &nbsp;
         span.text-default #{file}
     .panel-body
-      pre #{source}
+      pre !{source}
 
 block mvc
   include ../partials/angular
+
+block app
+  != js('viewer-app')
