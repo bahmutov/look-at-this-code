@@ -1,0 +1,15 @@
+h2 #{fileList.length} file(s)
+table.table.table-striped.table-condensed
+  thead
+    tr
+      th #
+      th Path
+      th Size
+      th Link
+  each file,index in fileList
+    tr
+      td #{index}
+      td #{file.path}
+      td #{file.size}
+      td
+        a(href='#{file.url}') link

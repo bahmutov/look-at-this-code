@@ -43,13 +43,18 @@ exports.getRepo = function(req, res, next) {
 
   var gh = github(req);
   var repo = gh.getRepo(user, name);
-  var show = Promise.promisify(repo.show, repo);
+  // two promises
+  var show = Promise.promisify(repo.show, repo)();
+  var getTree = Promise.promisify(repo.getTree, repo)('master?recursive=true');
+  var promises = [show, getTree];
+  Promise.all(promises)
+    .spread(function (info, tree) {
+      var filesOnly = R.filter(R.propEq('type', 'blob'), tree);
 
-  show()
-    .then(function (info) {
       res.render('review/repo', {
         title: 'Repo',
-        repo: check.array(info) ? info[0] : info
+        repo: check.array(info) ? info[0] : info,
+        fileList: filesOnly
       });
     })
     .catch(next);
