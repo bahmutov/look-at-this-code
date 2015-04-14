@@ -1,26 +1,35 @@
+require('lazy-ass');
+var check = require('check-more-types');
 var Github = require('github-api');
 var R = require('ramda');
 var status = require('http-status');
+var Promise = require('bluebird');
+
+function github(req) {
+  var token = R.find(R.propEq('kind', 'github'), req.user.tokens);
+  la(check.object(token), 'cannot find gh token', req.user.tokens);
+  la(check.unemptyString(token.accessToken), 'expected access token in', token);
+  return new Github({ token: token.accessToken });
+}
 
 // GET /repos
 exports.getRepos = function(req, res, next) {
-  var token = R.find(R.propEq('kind', 'github'), req.user.tokens);
+  var gh = github(req);
+  var user = gh.getUser();
+  var repos = Promise.promisify(user.repos, user);
 
-  var github = new Github({ token: token.accessToken });
-  var user = github.getUser();
-  user.repos(function (err, repos) {
-    if (err) return next(err);
-
-    res.render('review/repos', {
-      title: 'Repos',
-      repos: repos
-    });
-  });
+  repos()
+    .then(function (repos) {
+      res.render('review/repos', {
+        title: 'Repos',
+        repos: repos
+      });
+    })
+    .catch(next);
 };
 
 // GET /repos/<user>/<name>
 exports.getRepo = function(req, res, next) {
-  var token = R.find(R.propEq('kind', 'github'), req.user.tokens);
 
   var user = req.params.user;
   if (!user) {
@@ -31,16 +40,17 @@ exports.getRepo = function(req, res, next) {
   if (!name) {
     return res.status(status.BAD_REQUEST).send('Missing repo name');
   }
-  var github = new Github({ token: token.accessToken });
-  var repo = github.getRepo(user, name);
 
-  repo.show(function (err, info) {
-    if (err) return next(err);
+  var gh = github(req);
+  var repo = gh.getRepo(user, name);
+  var show = Promise.promisify(repo.show, repo);
 
-    res.render('review/repo', {
-      title: 'Repo',
-      repo: info
-    });
-  });
-
+  show()
+    .then(function (info) {
+      res.render('review/repo', {
+        title: 'Repo',
+        repo: check.array(info) ? info[0] : info
+      });
+    })
+    .catch(next);
 };
