@@ -2,4 +2,4 @@ deployment:
   staging:
     branch: master
     heroku:
-      appname: pe-n-starter
+      appname: look-at-this-code
