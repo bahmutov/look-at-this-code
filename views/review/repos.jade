@@ -14,7 +14,7 @@ block content
         each repo in repos
           .col-xs-4
             h4
-              a(href='#{repo.html_url}') #{repo.name}
+              a(href='repos/#{repo.full_name}') #{repo.name}
             ul.list-inline
               li
                 i.fa.fa-eye-slash

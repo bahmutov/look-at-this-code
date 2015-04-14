@@ -25,7 +25,8 @@ function addRoutes(app) {
   app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 
   // code review routes
-  app.get('/review/repos', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getReviewRepos);
+  app.get('/repos', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepos);
+  app.get('/repos/:user/:name', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepo);
 
   // auth via github
   app.get('/auth/github', passport.authenticate('github'));
