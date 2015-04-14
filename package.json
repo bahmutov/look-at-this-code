@@ -44,6 +44,7 @@
     "passport-github": "^0.1.5",
     "passport-oauth": "^1.0.0",
     "pouchdb": "3.4.0",
+    "quote": "0.4.0",
     "ramda": "0.13.0",
     "request": "^2.55.0",
     "session-file-store": "0.0.3",

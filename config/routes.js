@@ -27,6 +27,7 @@ function addRoutes(app) {
   // code review routes
   app.get('/repos', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepos);
   app.get('/repos/:user/:name', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepo);
+  app.get('/repos/view/:user/:name/:file', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.viewFile);
 
   // auth via github
   app.get('/auth/github', passport.authenticate('github'));

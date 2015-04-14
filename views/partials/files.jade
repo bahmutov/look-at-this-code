@@ -3,13 +3,14 @@ table.table.table-striped.table-condensed
   thead
     tr
       th #
+      th Link
       th Path
       th Size
-      th Link
   each file,index in fileList
     tr
-      td #{index}
+      td #{index + 1}
+      td
+        a(href='/repos/view/#{repo.full_name}/#{file.path}')
+          i.fa.fa-file-o
       td #{file.path}
       td #{file.size}
-      td
-        a(href='#{file.url}') link

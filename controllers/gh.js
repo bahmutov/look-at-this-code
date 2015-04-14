@@ -4,6 +4,7 @@ var Github = require('github-api');
 var R = require('ramda');
 var status = require('http-status');
 var Promise = require('bluebird');
+var quote = require('quote');
 
 function github(req) {
   var token = R.find(R.propEq('kind', 'github'), req.user.tokens);
@@ -30,6 +31,7 @@ exports.getRepos = function(req, res, next) {
 
 // GET /repos/<user>/<name>
 exports.getRepo = function(req, res, next) {
+  console.log('viewing repo', req.url);
 
   var user = req.params.user;
   if (!user) {
@@ -55,6 +57,42 @@ exports.getRepo = function(req, res, next) {
         title: 'Repo',
         repo: check.array(info) ? info[0] : info,
         fileList: filesOnly
+      });
+    })
+    .catch(next);
+};
+
+// GET /repos/view/<user>/<name>/<file>
+exports.viewFile = function(req, res, next) {
+
+  var user = req.params.user;
+  if (!user) {
+    return res.status(status.BAD_REQUEST).send('Missing user name');
+  }
+
+  var name = req.params.name;
+  if (!name) {
+    return res.status(status.BAD_REQUEST).send('Missing repo name');
+  }
+
+  var file = req.params.file;
+  if (!file) {
+    return res.status(status.BAD_REQUEST).send('Missing file path');
+  }
+
+  console.log('viewing file', quote(file));
+
+  var gh = github(req);
+  var repo = gh.getRepo(user, name);
+  var read = Promise.promisify(repo.read, repo);
+  read('master', file)
+    .then(function (src) {
+      res.render('review/viewer', {
+        title: 'Viewer',
+        src: src,
+        userName: user,
+        repoName: name,
+        file: file
       });
     })
     .catch(next);
