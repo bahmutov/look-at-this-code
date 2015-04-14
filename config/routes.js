@@ -1,5 +1,6 @@
 var passportConf = require('./passport');
 var passport = require('passport');
+var S = require('spots');
 
 /**
  * Controllers (route handlers).
@@ -8,7 +9,6 @@ var homeController = require('../controllers/home');
 var userController = require('../controllers/user');
 var ghController = require('../controllers/gh');
 var contactController = require('../controllers/contact');
-
 
 function addRoutes(app) {
   /**
@@ -25,9 +25,10 @@ function addRoutes(app) {
   app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 
   // code review routes
-  app.get('/repos', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepos);
-  app.get('/repos/:user/:name', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.getRepo);
-  app.get('/repos/view/:user/:name/:file', passportConf.isAuthenticated, passportConf.isAuthorized, ghController.viewFile);
+  var authGet = S(app.get, S, passportConf.isAuthenticated, passportConf.isAuthorized).bind(app);
+  authGet('/repos', ghController.getRepos);
+  authGet('/repos/:user/:name', ghController.getRepo);
+  authGet('/repos/view/:user/:name/:file', ghController.viewFile);
 
   // auth via github
   app.get('/auth/github', passport.authenticate('github'));
