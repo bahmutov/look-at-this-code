@@ -32,6 +32,9 @@ app.set('port', config.get('PORT'));
 app.set('env', config.get('NODE_ENV') || 'dev');
 app.set('views', toFull('../views'));
 app.set('view engine', 'jade');
+if (app.get('env') === 'dev') {
+  app.locals.pretty = true;
+}
 app.use(compress());
 app.use(connectAssets({
   paths: [toFull('../public/css'), toFull('../public/js')]
