@@ -86,10 +86,10 @@ exports.viewFile = function(req, res, next) {
   var repo = gh.getRepo(user, name);
   var read = Promise.promisify(repo.read, repo);
   read('master', file)
-    .then(function (src) {
+    .then(function (source) {
       res.render('review/viewer', {
         title: 'Viewer',
-        src: src,
+        source: source,
         userName: user,
         repoName: name,
         file: file

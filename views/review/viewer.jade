@@ -1,6 +1,11 @@
 extends ../layout
 
 block content
-  h1 #{file}
-  p.lead Code reviews with separation of concerns
-  hr
+
+  .panel.panel-default
+    .panel-heading
+      h3.panel-title
+        span.text-muted #{userName} / #{repoName} / &nbsp;
+        span.text-default #{file}
+    .panel-body
+      pre #{source}
