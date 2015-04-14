@@ -17,6 +17,10 @@
       console.log('loaded editor', _editor);
       $scope.editor = _editor;
 
+      $scope.editor.on('gutterclick', function (e) {
+        console.log('gutter click', e);
+      });
+
       $scope.editor.getSession().selection.on('changeSelection', function (e) {
         var selection = $scope.editor.getSelectionRange();
         if (selection.isEmpty()) {

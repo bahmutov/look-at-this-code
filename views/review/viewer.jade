@@ -9,8 +9,7 @@ block content
         span.text-muted #{userName} / #{repoName} / &nbsp;
         span.text-default #{file}
     .panel-body(ng-controller='EditorController')
-      pre(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource")
-      | !{source}
+      pre(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource") !{source}
 
 block mvc
   include ../partials/angular
