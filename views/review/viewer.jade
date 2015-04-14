@@ -1,14 +1,16 @@
 extends ../layout
 
 block content
+  <style>.ace_editor { height: 1000px; }</style>
 
   .panel.panel-default
     .panel-heading
       h3.panel-title
         span.text-muted #{userName} / #{repoName} / &nbsp;
         span.text-default #{file}
-    .panel-body
-      pre !{source}
+    .panel-body(ng-controller='EditorController')
+      pre(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource")
+      | !{source}
 
 block mvc
   include ../partials/angular
