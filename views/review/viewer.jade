@@ -8,6 +8,11 @@ block content
     .ace_editor {
       height: 550px;
     }
+    #note {
+      position: absolute;
+      z-index: 100;
+      visibility: hidden;
+    }
 
   .panel.panel-default
     .panel-heading
@@ -16,8 +21,17 @@ block content
         span.text-default #{file}
     .panel-body#viewer(ng-controller='EditorController')
 
-      script#source(type="text/file-source") !{source}
-      div(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource")
+      script#source(type='text/file-source') !{source}
+      div(ui-ace='{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}',
+        ng-model="shownSource")
+
+      #note.panel.panel-default(ng-style='{visibility: selection ? "visible" : "hidden"}')
+        .panel-body
+          textarea(rows='3' cols='100' ng-model='noteText')
+          br
+          .btn-group.pull-right
+            btn.btn.btn-default(ng-click='cancelNote()') Cancel
+            btn.btn.btn-success(ng-click='addNote()') Add note
 
 block mvc
   include ../partials/angular

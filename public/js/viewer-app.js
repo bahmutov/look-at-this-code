@@ -13,6 +13,21 @@
       $scope.selectedText = null;
     }
 
+    $scope.cancelNote = function cancelNote() {
+      $scope.noteText = '';
+      clearSelection();
+      return false;
+    };
+
+    $scope.addNote = function cancelNote() {
+      console.log('adding note', $scope.noteText);
+      console.log('for source', $scope.selectedText);
+      console.log('and selection range', $scope.selection.toString());
+      $scope.noteText = '';
+      clearSelection();
+      return false;
+    };
+
     $scope.aceLoaded = function(_editor) {
       $scope.editor = _editor;
       _editor.setReadOnly(true);
