@@ -1,14 +1,21 @@
 extends ../layout
 
 block content
-  <style>.ace_editor { height: 1000px; }</style>
+  style.
+    #viewer {
+      padding: 0;
+    }
+    .ace_editor {
+      height: 550px;
+    }
 
   .panel.panel-default
     .panel-heading
       h3.panel-title
         span.text-muted #{userName} / #{repoName} / &nbsp;
         span.text-default #{file}
-    .panel-body(ng-controller='EditorController')
+    .panel-body#viewer(ng-controller='EditorController')
+
       script#source(type="text/file-source") !{source}
       div(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource")
 
