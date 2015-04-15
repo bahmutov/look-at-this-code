@@ -14,8 +14,8 @@
     }
 
     $scope.aceLoaded = function(_editor) {
-      console.log('loaded editor', _editor);
       $scope.editor = _editor;
+      _editor.setReadOnly(true);
 
       $scope.editor.on('gutterclick', function (e) {
         console.log('gutter click', e);
