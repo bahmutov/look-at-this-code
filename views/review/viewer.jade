@@ -9,7 +9,8 @@ block content
         span.text-muted #{userName} / #{repoName} / &nbsp;
         span.text-default #{file}
     .panel-body(ng-controller='EditorController')
-      pre(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource") !{source}
+      script#source(type="text/file-source") !{source}
+      div(ui-ace="{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}", ng-model="shownSource")
 
 block mvc
   include ../partials/angular

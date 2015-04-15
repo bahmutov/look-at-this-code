@@ -6,7 +6,7 @@
   var app = angular.module('ViewerApp', ['ui.ace']);
 
   app.controller('EditorController', function ($scope, $element) {
-    $scope.shownSource = $element.find('pre').html();
+    $scope.shownSource = $element.find('#source').html();
 
     function clearSelection() {
       $scope.selection = null;
