@@ -1,6 +1,4 @@
-var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
-// var mongoose = require('mongoose');
 require('lazy-ass');
 var check = require('check-more-types');
 var R = require('ramda');
@@ -17,9 +15,7 @@ function createUserStore(pouchDb) {
   la(pouchDb, 'expected pouch db');
   la(check.fn(pouchDb.store), 'missing pouch store function, use store.pouchdb');
   var User = pouchDb.store();
-
   User.gravatar = userGravatar;
-
   return User;
 }
 
