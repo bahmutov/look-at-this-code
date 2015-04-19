@@ -2,7 +2,8 @@ var R = require('ramda');
 
 function initModels(db) {
   return {
-    User: require('./User')(db)
+    User: require('./User')(db),
+    Note: require('./Note')(db)
   };
 };
 

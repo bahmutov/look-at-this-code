@@ -36,6 +36,7 @@
       console.log('and selection range', $scope.selection.toString());
 
       $http.post('/notes', {
+        file: FILE_INFO,
         text: $scope.noteText,
         source: $scope.selectedText,
         range: {

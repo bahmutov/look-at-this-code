@@ -22,6 +22,13 @@ block content
     .panel-body#viewer(ng-controller='EditorController')
 
       script#source(type='text/file-source') !{source}
+      script.
+        var FILE_INFO = Object.freeze({
+          userName: '#{userName}',
+          repoName: '#{repoName}',
+          fileName: '#{file}'
+        });
+        // TODO add SHA id of the file
       div(ui-ace='{useWrapMode : false, showGutter: true, firstLineNumber: 1, onLoad: aceLoaded, onChange: aceChanged}',
         ng-model="shownSource")
 
