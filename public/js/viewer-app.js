@@ -3,9 +3,20 @@
 
 (function startViewerApp(angular) {
 
-  var app = angular.module('ViewerApp', ['ui.ace']);
+  var app = angular.module('ViewerApp', ['ui.ace', 'ngCookies']);
 
-  app.controller('EditorController', function ($scope, $element) {
+  app.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'x-csrf-token';
+  }]);
+  app.run(function ($cookies) {
+    var metaToken = document.querySelector('meta[name="csrf-token"]');
+    if (metaToken) {
+      $cookies.csrftoken = metaToken.content;
+    }
+  });
+
+  app.controller('EditorController', function ($scope, $element, $http) {
     $scope.shownSource = $element.find('#source').html();
 
     function clearSelection() {
@@ -23,6 +34,20 @@
       console.log('adding note', $scope.noteText);
       console.log('for source', $scope.selectedText);
       console.log('and selection range', $scope.selection.toString());
+
+      $http.post('/notes', {
+        text: $scope.noteText,
+        source: $scope.selectedText,
+        range: {
+          start: $scope.selection.start,
+          end: $scope.selection.end
+        }
+      }).success(function () {
+        console.log('saved new note');
+      }).error(function () {
+        console.error('could not save new note');
+      });
+
       $scope.noteText = '';
       clearSelection();
       return false;

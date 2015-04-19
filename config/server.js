@@ -37,7 +37,10 @@ if (app.get('env') === 'dev') {
 }
 app.use(compress());
 app.use(connectAssets({
-  paths: [toFull('../public/css'), toFull('../public/js')]
+  paths: [
+    toFull('../public/css'),
+    toFull('../public/js')
+  ]
 }));
 app.use(logger(config.get('NODE_ENV')));
 app.use(bodyParser.json());

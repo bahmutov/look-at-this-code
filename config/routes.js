@@ -9,6 +9,7 @@ var homeController = require('../controllers/home');
 var userController = require('../controllers/user');
 var ghController = require('../controllers/gh');
 var contactController = require('../controllers/contact');
+var notes = require('../controllers/notes');
 
 function addRoutes(app) {
   /**
@@ -29,6 +30,8 @@ function addRoutes(app) {
   authGet('/repos', ghController.getRepos);
   authGet('/repos/:user/:name', ghController.getRepo);
   authGet('/repos/view/:user/:name/:file', ghController.viewFile);
+
+  app.post('/notes', passportConf.isAuthenticated, passportConf.isAuthorized, notes.addNote);
 
   // auth via github
   app.get('/auth/github', passport.authenticate('github'));
