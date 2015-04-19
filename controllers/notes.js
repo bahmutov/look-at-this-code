@@ -7,7 +7,7 @@ exports.addNote = function addNote(req, res) {
   Notes.new(req.body).store()
     .then(function (n) {
       console.log('stored new note', n);
-      return res.status(status.OK);
+      return res.status(status.OK).send();
     })
     .catch(function (err) {
       return res.status(status.INTERNAL_SERVER_ERROR).send(err);
